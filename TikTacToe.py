@@ -50,6 +50,7 @@ class TicTacToe:
         round_frame = tk.Frame(self.root)
         round_frame.pack(pady=5)
         tk.Label(round_frame, text="Rounds:").pack(side=tk.LEFT)
+        tk.Radiobutton(round_frame, text="1", variable=self.total_rounds, value=1, command=self.options_changed).pack(side=tk.LEFT)
         tk.Radiobutton(round_frame, text="3", variable=self.total_rounds, value=3, command=self.options_changed).pack(side=tk.LEFT)
         tk.Radiobutton(round_frame, text="5", variable=self.total_rounds, value=5, command=self.options_changed).pack(side=tk.LEFT)
         tk.Radiobutton(round_frame, text="7", variable=self.total_rounds, value=7, command=self.options_changed).pack(side=tk.LEFT)
