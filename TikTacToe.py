@@ -1,6 +1,3 @@
-# "C:\Users\HP\AppData\Local\Programs\Python\Python313\Scripts\pyinstaller.exe" --onefile --windowed --icon="C:\Users\HP\Desktop\vscip\TicTacToe\TikTacToe.ico" TikTacToe.py
-
-
 import tkinter as tk
 from tkinter import messagebox
 import random
@@ -10,7 +7,6 @@ class TicTacToe:
     def __init__(self, root):
         self.root = root
         self.root.title("PyTactix - Tic Tac Toe")
-        #self.root.iconbitmap("TikTacToe.ico")
         self.root.geometry("400x600")
         self.root.resizable(False, False)
 
@@ -65,8 +61,14 @@ class TicTacToe:
         self.score_label = tk.Label(self.root, text="Score - X: 0 | O: 0", font=("Arial", 12))
         self.score_label.pack()
 
-        reset_score_btn = tk.Button(self.root, text="Reset Score", command=self.reset_score, bg="#d9534f", fg="white", font=("Arial", 12, "bold"))
-        reset_score_btn.pack(pady=5)
+        control_frame = tk.Frame(self.root)
+        control_frame.pack(pady=5)
+
+        reset_round_btn = tk.Button(control_frame, text="Reset Round", command=self.reset_game, bg="#0275d8", fg="white", font=("Arial", 12, "bold"))
+        reset_round_btn.pack(side=tk.LEFT, padx=5)
+
+        reset_game_btn = tk.Button(control_frame, text="Reset Game", command=self.reset_score_and_game, bg="#d9534f", fg="white", font=("Arial", 12, "bold"))
+        reset_game_btn.pack(side=tk.LEFT, padx=5)
 
         self.draw_board()
 
@@ -76,8 +78,7 @@ class TicTacToe:
 
     def options_changed(self):
         self.toggle_mode()
-        self.reset_score()
-        self.reset_game()
+        self.reset_score_and_game()
 
     def update_theme(self, theme):
         colors = {
@@ -207,10 +208,11 @@ class TicTacToe:
         self.status_label.config(text=f"Player {self.current_symbol}'s Turn")
         self.draw_board()
 
-    def reset_score(self):
+    def reset_score_and_game(self):
         self.scores = {"X": 0, "O": 0}
         self.round_count = 0
         self.update_score()
+        self.reset_game()
 
     def toggle_mode(self):
         self.is_two_player = self.mode_var.get() == "2P"
@@ -227,10 +229,9 @@ class TicTacToe:
                 winner = "Player O"
             play_again = messagebox.askyesno("Game Over", f"Game over! Winner: {winner}\nDo you want to play again?")
             if play_again:
-                self.reset_score()
-                self.reset_game()
+                self.reset_score_and_game()
             else:
-                self.reset_score()
+                self.reset_score_and_game()
                 self.root.destroy()
                 sys.exit()
         else:
